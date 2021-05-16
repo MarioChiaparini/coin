@@ -397,7 +397,43 @@ ESTILOS PROPIOS DE LOS GRÄFICOS
 
 </style>
 <body>
-		<script>
+		
+  <div class="topnav" id="myTopnav">
+    <p id="title" class="font-weight-bold">💰Coinow💰</p>
+
+  </div>
+    <!-- https://codepen.io/jlalovi/details/bIyAr -->
+   
+<div class="container">
+  <div class="align-center" id="view">
+    
+  <div id="ltc_val" class="h4 kpi-value"></div>
+  <div id="eth_val" class="h4 kpi-value"></div>
+<div class="row mt-4 pr-3 pl-3">
+   <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
+                  <div class="line-chart-block block">
+                    <div id="chart-container"></div>
+       <div class="line-chart">
+         <div class='grafico'>
+           
+         <ul class='eje-x'>
+         </div>
+        </div>
+                          <div class="text-center">
+                            <a type="button" class="btn btn-primary align-center " id="bton" href="./index.html">Bitcoin</a>
+                            <a type="button" class="btn btn-primary justify-content-center align-items-center " id="bton" href="./eth.html">Ethereum</a>
+                            <a type="button" class="btn btn-primary justify-content-center" id="bton" href="./litcoin.html">Litcoin</a> 
+                        </ul>
+                        <div class="align-center">
+                          <div class="text">
+                            <p class="font-weight-bold align-center" id="crypto">Bitcoin</p>
+                          </div>
+                          <div class="font-weight-bold" id="btc_val"></div>
+                          </div>
+                          </div>
+                    </div>
+                  </div>
+	  <script>
 
    //Fetch the price of Ethereum
    const eth_api_url = 'https://api.cryptonator.com/api/ticker/eth-usd';
@@ -563,41 +599,6 @@ ESTILOS PROPIOS DE LOS GRÄFICOS
    });
 
 </script>
-  <div class="topnav" id="myTopnav">
-    <p id="title" class="font-weight-bold">💰Coinow💰</p>
-
-  </div>
-    <!-- https://codepen.io/jlalovi/details/bIyAr -->
-   
-<div class="container">
-  <div class="align-center" id="view">
-    
-  <div id="ltc_val" class="h4 kpi-value"></div>
-  <div id="eth_val" class="h4 kpi-value"></div>
-<div class="row mt-4 pr-3 pl-3">
-   <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
-                  <div class="line-chart-block block">
-                    <div id="chart-container"></div>
-       <div class="line-chart">
-         <div class='grafico'>
-           
-         <ul class='eje-x'>
-         </div>
-        </div>
-                          <div class="text-center">
-                            <a type="button" class="btn btn-primary align-center " id="bton" href="./index.html">Bitcoin</a>
-                            <a type="button" class="btn btn-primary justify-content-center align-items-center " id="bton" href="./eth.html">Ethereum</a>
-                            <a type="button" class="btn btn-primary justify-content-center" id="bton" href="./litcoin.html">Litcoin</a> 
-                        </ul>
-                        <div class="align-center">
-                          <div class="text">
-                            <p class="font-weight-bold align-center" id="crypto">Bitcoin</p>
-                          </div>
-                          <div class="font-weight-bold" id="btc_val"></div>
-                          </div>
-                          </div>
-                    </div>
-                  </div>
                   
 </div>
 </div>
