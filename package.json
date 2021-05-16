@@ -13,6 +13,9 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {},
-  "keywords": [],
+    "keywords": [
+    "example",
+    "heroku"
+  ],
   "description": ""
 }
