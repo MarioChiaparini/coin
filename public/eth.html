@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="../style/th.css">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Bitcoin Ticker</title>
+<script src="https://ds.fusioncharts.com/2.0.8/js/ds.js"></script>
+<script type="text/javascript" src="http://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+<!-- design system files -->
+
+</head>
+<style>
+  /************************
+Css orignal https://codepen.io/jlalovi/details/bIyAr
+************************/
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,700);
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;  
+}
+body {
+  background: #11998e;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top,#11998e, #38ef7d);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #11998e, #38ef7d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+h1 {
+	font-size: 23px;
+}
+
+h2 {
+	font-size: 17px;
+}
+
+p {
+	font-size: 15px;
+}
+
+a {
+	text-decoration: none;
+	font-size: 15px;
+}
+	a:hover {
+		text-decoration: underline;
+	}
+
+h1, h2, p, a, span{
+	color: #fff;
+}
+	.scnd-font-color {
+		color: #00fa9a;
+	}
+.titular {
+display: block;
+line-height: 60px;
+margin: 0;
+text-align: center;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+}
+.horizontal-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+	.horizontal-list li {
+		float: left;
+	}
+		.block {
+			margin: 25px 25px 0 0;
+			background: #394264;
+			border-radius: 5px;
+      float: left;
+      width: 300px;
+      overflow: hidden;
+		}
+			.line-chart-block, .bar-chart-block {
+        position: relative;
+                height: 540px;
+                width: 750px;
+              
+                left: 15%;
+                right: 50%;
+                bottom: 60%;
+                margin-top: auto;
+                margin-bottom: auto;
+                align-items: center;
+    justify-content: space-around;
+						
+			}
+  
+				.line-chart {
+					height: 50px;
+                    margin-top: auto;
+                        margin-bottom: auto;
+                        align-items: center;
+    justify-content: space-around;
+						
+					
+				}
+				.time-lenght {
+                    
+					padding-top: 22px;
+					padding-left: 38px;
+                    margin-top: auto;
+                        margin-bottom: auto;
+                        align-items: center;
+    justify-content: space-around;
+						
+          overflow: hidden;
+          
+				}
+					.time-lenght-btn {
+                        margin-top: auto;
+                        margin-bottom: auto;
+						display: block;
+						width: 70px;
+						line-height: 32px;
+						background: #50597b;
+						border-radius: 5px;
+						font-size: 14px;
+						text-align: center;
+						margin-right: 5px;
+						-webkit-transition: background .3s;
+						transition: background .3s;
+                        position: relative;
+                        top: 45%;
+                        
+					}
+						.time-lenght-btn:hover {
+							text-decoration: none;
+							background: #e64c65;
+						}
+				.month-data {
+					padding-top: 28px;
+				}
+					.month-data p {
+						display: inline-block;
+						margin: 0;
+						padding: 0 25px 15px;            
+						font-size: 16px;
+					}
+						.month-data p:last-child {
+							padding: 0 25px;
+              float: right;
+							font-size: 15px;
+						}
+						.increment {
+							color: #e64c65;
+						}
+
+/******************************************
+↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+ESTILOS PROPIOS DE LOS GRÄFICOS
+↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ LINEAL
+******************************************/
+
+.grafico {
+  padding: 2rem 1rem 1rem;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  color: #fff;
+  font-size: 80%;
+}
+.grafico span {
+  display: block;
+  position: absolute;
+  bottom: 3rem;
+  left: 2rem;
+  height: 0;
+  border-top: 2px solid;
+  transform-origin: left center;
+}
+[data-valor='23']:after {
+  content: '+' attr(data-valor) '%';
+  position: absolute;
+  right: -2.7rem;
+  top: -1.7rem;
+  padding: .3rem .5rem;
+  background: #50597B;
+  border-radius: .5rem;
+  transform: rotate(45deg);  
+}
+[class^='eje-'] {
+  position: absolute;
+  left: 0;
+  bottom: 0rem;
+  width: 100%;
+  padding: 1rem 1rem 0 2rem;
+  height: 80%;
+}
+.eje-x {
+  height: 2.5rem;
+}
+.eje-y li {
+  height: 25%;
+  border-top: 1px solid #777;
+}
+[data-ejeY]:before {
+  content: attr(data-ejeY);
+  display: inline-block;
+  width: 2rem;
+  text-align: right;
+  line-height: 0;
+  position: relative;
+  left: -2.5rem;
+  top: -.5rem;
+} 
+.eje-x li {
+  width: 33%;
+  float: left;
+  text-align: center;
+}
+.navbar-dark {
+    background-color: #00fa9a;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+    min-height: 65px;
+ }
+ 
+ .logo {
+    color: #ffffff;
+    font-weight: 500;
+    text-transform: capitalize;
+ }
+ 
+ .card {
+    border-radius: 5px;
+    box-shadow: 0 6px 14px 0 rgba(33, 35, 68, 0.1) !important;
+ }
+ 
+ .kpi-value {
+    font-weight: 500 !important;
+ }
+ #my-chart.area {
+   height: 200px;
+   max-width: 400px;
+   margin: 0 auto;
+ }
+
+ 
+ #wrapper {
+   position: relative;
+   background: #000524;
+   border: 1px solid #000;
+   box-shadow: 0 22px 35px -16px rgba(0, 0, 0, 0.71);
+   max-width: 850px;
+   margin: 0 auto;
+ }
+ 
+ #chart-bar {
+   position: relative;
+   margin-top: -38px;
+   width: 550px;
+    height: 300px;
+    padding: 20px;
+ 
+    -webkit-box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+    -moz-box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+    box-shadow: 0px 1px 2px rgba(0,0,0,.1);
+ }
+ 
+ .link {
+   position: absolute;
+   bottom: 7px;
+   right: 13px;
+   z-index: 10;
+   color: #ccc;
+   font-size: 12px;
+   text-decoration: none;
+   font-family: Helvetica, Arial;
+ }
+ #btc_val{
+    display: none;
+    visibility: hidden;
+
+ }
+ #crypto{
+   position: relative;
+   top: 10px;
+ }
+ #view{
+    position: relative;
+    margin-bottom: auto;
+    padding-bottom: 25px;
+ 
+ }
+#eth_val{
+    color: white;
+    position: relative;
+    bottom: 9px;
+}
+
+#ltc_val{
+    display: none;
+    visibility: hidden;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color:#38ef7d;
+  position: relative;
+  margin-bottom: 65px;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+.btn btn-primary justify-content-center{
+  color: #00fa9a;
+  background: #00fa9a;
+  border-color: #ccc;
+}
+#bton{
+  background: #00fa9a;
+}
+.line-chart-block{
+  color: #00fa9a;
+  background: #00fa9a;
+}
+.raphael-group-27-canvas{
+  color: #00fa9a;
+  
+}
+#title{
+    text-align: center;
+    position: relative;
+    font-weight: 100;
+    font-size: large;
+  }
+</style>
+<body>
+
+  <div class="topnav" id="myTopnav">
+    <p id="title" class="font-weight-bold">💰Coinow💰</p>
+
+  </div>
+    <!-- https://codepen.io/jlalovi/details/bIyAr -->
+    <div class="align-center" id="view">
+<div class="container">
+  <div id="ltc_val" class="h4 kpi-value"></div>
+  <div id="btc_val" class="h4 kpi-value"></div>
+<div class="row mt-4 pr-3 pl-3">
+   <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
+                  <div class="line-chart-block block">
+                    <div id="chart-container"></div>
+       <div class="line-chart">
+         <div class='grafico'>
+         <ul class='eje-x'>
+         </div>
+        </div>
+                          <div class="text-center">
+                            <a type="button" class="btn btn-primary align-center " id="bton" href="./index.html">Bitcoin</a>
+                            <a type="button" class="btn btn-primary justify-content-center align-items-center " id="bton" href="./eth.html">Ethereum</a>
+                            <a type="button" class="btn btn-primary justify-content-center" id="bton" href="litcoin.html">Litcoin</a> 
+                        </ul>
+                        <div class="align-center">
+                          <div class="text">
+                            <p class="font-weight-bold align-center" id="crypto">Ethereum</p>
+                          </div>
+                          <div class="font-weight-bold" id="eth_val"></div>
+                          </div>
+                          </div>
+                    </div>
+                  </div>
+                  <script>
+                    
+   //Fetch the price of Ethereum
+   const eth_api_url = 'https://api.cryptonator.com/api/ticker/eth-usd';
+   function ethereumHttpObject() {
+      try {
+         return new XMLHttpRequest();
+      } catch (error) {}
+   }
+   function ethereumGetData() {
+      var request = ethereumHttpObject();
+      request.open('GET', eth_api_url, false);
+      request.send(null);
+      console.log(request.responseText);
+      return request.responseText;
+   }
+   function ethereumDataHandler() {
+      var raw_data_string = ethereumGetData();
+      var data = JSON.parse(raw_data_string);
+      var base = data.ticker.base;
+      var target = data.ticker.target;
+      var price = data.ticker.price;
+      var volume = data.ticker.volume;
+      var change = data.ticker.change;
+      var api_server_epoch_timestamp = data.timestamp;
+      var api_success = data.success;
+      var api_error = data.error;
+      return price;
+   }
+   document.getElementById('eth_val').innerHTML = '$' + Math.round(ethereumDataHandler());
+   //Fetch the price of Litecoin
+   const ltc_api_url = 'https://api.cryptonator.com/api/ticker/ltc-usd';
+   function litecoinHttpObject() {
+      try {
+         return new XMLHttpRequest();
+      } catch (error) {}
+   }
+   function litecoinGetData() {
+      var request = litecoinHttpObject();
+      request.open('GET', ltc_api_url, false);
+      request.send(null);
+      //console.log(request.responseText);
+      return request.responseText;
+   }
+   function litecoinDataHandler() {
+      var raw_data_string = litecoinGetData();
+      var data = JSON.parse(raw_data_string);
+      var base = data.ticker.base;
+      var target = data.ticker.target;
+      var price = data.ticker.price;
+      var volume = data.ticker.volume;
+      var change = data.ticker.change;
+      var api_server_epoch_timestamp = data.timestamp;
+      var api_success = data.success;
+      var api_error = data.error;
+      return price;
+   }
+   document.getElementById('ltc_val').innerHTML = '$' + Math.round(litecoinDataHandler());
+   //Fetch the value of Bitcoin
+   const api_url = 'https://api.cryptonator.com/api/ticker/btc-usd';
+   const time_interval = 2;
+   function addLeadingZero(num) {
+      return num <= 9 ? '0' + num : num;
+   }
+   function clientDateTime() {
+      var date_time = new Date();
+      var curr_hour = date_time.getHours();
+      var zero_added_curr_hour = addLeadingZero(curr_hour);
+      var curr_min = date_time.getMinutes();
+      var curr_sec = date_time.getSeconds();
+      var curr_time = zero_added_curr_hour + ':' + curr_min + ':' + curr_sec;
+      return curr_time;
+   }
+   function makeHttpObject() {
+      try {
+         return new XMLHttpRequest();
+      } catch (error) {}
+   }
+   function bitcoinGetData() {
+      var request = makeHttpObject();
+      request.open('GET', api_url, false);
+      request.send(null);
+      return request.responseText;
+   }
+   function bitcoinDataHandler() {
+      var raw_data_string = bitcoinGetData();
+      var data = JSON.parse(raw_data_string);
+      var base = data.ticker.base;
+      var target = data.ticker.target;
+      var price = data.ticker.price;
+      var volume = data.ticker.volume;
+      var change = data.ticker.change;
+      var api_server_epoch_timestamp = data.timestamp;
+      var api_success = data.success;
+      var api_error = data.error;
+      return price;
+   }
+   document.getElementById('eth_val').innerHTML = '$' + Math.round(ethereumDataHandler());
+   FusionCharts.ready(function() {
+      var fusioncharts = new FusionCharts({
+         id: 'stockRealTimeChart',
+         type: 'realtimeline',
+         renderAt: 'chart-container',
+         width: '100%',
+         height: '350',
+         dataFormat: 'json',
+         dataSource: {
+            chart: {
+               caption: 'Ethereum Ticker',
+               subCaption: '',
+               xAxisName: 'Local Time',
+               yAxisName: 'USD',
+               numberPrefix: '$',
+               refreshinterval: '2',
+               slantLabels: '1',
+               numdisplaysets: '10',
+               labeldisplay: 'rotate',
+               showValues: '0',
+               showRealTimeValue: '0',
+               theme: 'fusion',
+               yAxisMaxValue: ethereumDataHandler().toString() + 20,
+               yAxisMinValue: ethereumDataHandler().toString() - 20,
+            },
+            categories: [
+               {
+                  category: [
+                     {
+                        label: clientDateTime().toString(),
+                     },
+                  ],
+               },
+            ],
+            dataset: [
+               {
+                  data: [
+                     {
+                        value: ethereumDataHandler().toString(),
+                     },
+                  ],
+               },
+            ],
+         },
+         events: {
+            initialized: function(e) {
+               function updateData() {
+                  // Get reference to the chart using its ID
+                  var chartRef = FusionCharts('stockRealTimeChart'),
+                     x_axis = clientDateTime(),
+                     y_axis = ethereumDataHandler(),
+                     strData = '&label=' + x_axis + '&value=' + y_axis;
+                  // Feed it to chart.
+                  chartRef.feedData(strData);
+               }
+               e.sender.chartInterval = setInterval(function() {
+                  updateData();
+               }, time_interval * 1000);
+            },
+            disposed: function(evt, arg) {
+               clearInterval(evt.sender.chartInterval);
+            },
+         },
+      });
+      fusioncharts.render();
+   });
+
+                  </script>
+</div>
+</div>
+</body>
+</html>
+
+  
